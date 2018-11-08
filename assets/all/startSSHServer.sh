@@ -1,3 +1,3 @@
 #! /bin/bash
 
-dropbear -R -p 2022
+dropbear -E -R -p 2022
