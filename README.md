@@ -1,7 +1,7 @@
 # UserLAnd-Assets-Kali
 A repository for holding Kali specific assets for UserLAnd
 
-After cloning this repo, you simply do the following...
+After cloning this repo, you simply do the following...  
 
 `sudo ./scripts/buildArch.sh $desiredArch` 
 `./scripts/installArch.sh $desiredArch`
