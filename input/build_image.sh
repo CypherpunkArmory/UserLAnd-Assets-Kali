@@ -25,32 +25,22 @@ rm -rf $DEBOOTSTRAP_DIR
 mkdir -p $DEBOOTSTRAP_DIR
 
 DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C apt update
-DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C apt install -y make git makedev wget
+DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C apt install -y make git makedev wget sed
 wget -O output/kali-archive-keyring_2018.1_all.deb http://http.kali.org/pool/main/k/kali-archive-keyring/kali-archive-keyring_2018.1_all.deb
 dpkg -i output/kali-archive-keyring_2018.1_all.deb
 git clone git://git.kali.org/packages/debootstrap.git $DEBOOTSTRAP_DIR
+sed -i '/setup_devices ()/a return 0' $DEBOOTSTRAP_DIR/functions
+sed -i '/setup_proc ()/a return 0' $DEBOOTSTRAP_DIR/functions
 make -C $DEBOOTSTRAP_DIR devices.tar.gz
 $DEBOOTSTRAP_DIR/debootstrap --foreign --arch=$DEBOOTSTRAP_ARCH --variant=minbase --include=kali-archive-keyring,perl kali-rolling $ROOTFS_DIR http://http.kali.org/kali
 case "$1" in
-    arm) cp qemu-arm-static $ROOTFS_DIR/usr/bin/
+    arm32v7) cp input/qemu-arm-static $ROOTFS_DIR/usr/bin/
         ;;
-    arm64) cp qemu-aarch64-static $ROOTFS_DIR/usr/bin/
+    arm64v8) cp input/qemu-aarch64-static $ROOTFS_DIR/usr/bin/
+        ;;
+    i386) cp input/qemu-i386-static $ROOTFS_DIR/usr/bin/
+        ;;
+    x86_64) cp input/qemu-x86_64-static $ROOTFS_DIR/usr/bin/
         ;;
 esac
-unset DEBOOTSTRAP_DIR
-DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR /debootstrap/debootstrap --second-stage
-
-echo "127.0.0.1 localhost" > $ROOTFS_DIR/etc/hosts
-echo "nameserver 8.8.8.8" > $ROOTFS_DIR/etc/resolv.conf
-echo "nameserver 8.8.4.4" >> $ROOTFS_DIR/etc/resolv.conf
-
-echo "#!/bin/sh" > $ROOTFS_DIR/etc/profile.d/userland.sh
-echo "unset LD_PRELOAD" >> $ROOTFS_DIR/etc/profile.d/userland.sh
-echo "unset LD_LIBRARY_PATH" >> $ROOTFS_DIR/etc/profile.d/userland.sh
-echo "export LIBGL_ALWAYS_SOFTWARE=1" >> $ROOTFS_DIR/etc/profile.d/userland.sh
-chmod +x $ROOTFS_DIR/etc/profile.d/userland.sh
-
-echo "deb http://http.kali.org/kali kali-rolling main contrib non-free" > $ROOTFS_DIR/etc/apt/sources.list
-echo "#deb-src http://http.kali.org/kali kali-rolling contrib non-free" >> $ROOTFS_DIR/etc/apt/sources.list
-
 tar --exclude='dev/*' -cvf $ARCH_DIR/rootfs.tar -C $ROOTFS_DIR .

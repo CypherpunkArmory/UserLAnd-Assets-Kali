@@ -6,6 +6,8 @@ FROM ${IMAGE_ARCH}/${IMAGE_DISTRO}:${IMAGE_VERSION}
 ARG QEMU_FILE
 ADD ${QEMU_FILE} /usr/bin
 
+RUN /debootstrap/debootstrap --second-stage
+
 ARG UPDATE_CMD
 RUN ${UPDATE_CMD}
 
