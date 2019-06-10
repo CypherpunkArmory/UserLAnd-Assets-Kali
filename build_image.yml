@@ -5,8 +5,6 @@ services:
      build: 
        context: .
        dockerfile: Dockerfile.build_image
-       args:
-         RUN_CMD: input/build_image.sh ${IMAGE_ARCH}
      volumes:
        - ./output:/output
        - ./input:/input

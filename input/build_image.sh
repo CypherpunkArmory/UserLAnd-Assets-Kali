@@ -5,13 +5,13 @@ export ARCH_DIR=output
 export ROOTFS_DIR=output/rootfs
 
 case "$1" in
-    arm32v7) export DEBOOTSTRAP_ARCH=armhf
+    arm) export DEBOOTSTRAP_ARCH=armhf
         ;;
-    arm64v8) export DEBOOTSTRAP_ARCH=arm64
+    arm64) export DEBOOTSTRAP_ARCH=arm64
         ;;
-    i386) export DEBOOTSTRAP_ARCH=i386
+    x86) export DEBOOTSTRAP_ARCH=i386
         ;;
-    amd64) export DEBOOTSTRAP_ARCH=amd64
+    x86_64) export DEBOOTSTRAP_ARCH=amd64
         ;;
     *) echo "unsupported arch: $1"
         exit
