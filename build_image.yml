@@ -1,0 +1,10 @@
+version: '3.2'
+
+services:
+   basebuild:
+     build: 
+       context: .
+       dockerfile: Dockerfile.build_image
+     volumes:
+       - ./output:/output
+       - ./input:/input
