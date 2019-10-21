@@ -26,8 +26,8 @@ mkdir -p $DEBOOTSTRAP_DIR
 
 DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C apt update
 DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C apt install -y make git makedev wget sed
-wget -O output/kali-archive-keyring_2018.1_all.deb http://http.kali.org/pool/main/k/kali-archive-keyring/kali-archive-keyring_2018.1_all.deb
-dpkg -i output/kali-archive-keyring_2018.1_all.deb
+wget -O output/kali-archive-keyring_2018.2_all.deb http://http.kali.org/pool/main/k/kali-archive-keyring/kali-archive-keyring_2018.2_all.deb
+dpkg -i output/kali-archive-keyring_2018.2_all.deb
 git clone git://git.kali.org/packages/debootstrap.git $DEBOOTSTRAP_DIR
 sed -i '/setup_devices ()/a return 0' $DEBOOTSTRAP_DIR/functions
 sed -i '/setup_proc ()/a return 0' $DEBOOTSTRAP_DIR/functions
