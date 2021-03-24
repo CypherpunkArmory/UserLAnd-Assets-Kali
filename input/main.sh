@@ -1,6 +1,7 @@
 #!/bin/bash
 
 /debootstrap/debootstrap --second-stage
+cat /debootstrap/debootstrap.log
 
 echo "127.0.0.1 localhost" > /etc/hosts
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
