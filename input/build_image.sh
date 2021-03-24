@@ -26,13 +26,13 @@ mkdir -p $DEBOOTSTRAP_DIR
 
 DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C apt update
 DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C apt install -y make git makedev wget sed
-wget -O output/kali-archive-keyring_2018.2_all.deb http://http.kali.org/pool/main/k/kali-archive-keyring/kali-archive-keyring_2018.2_all.deb
-dpkg -i output/kali-archive-keyring_2018.2_all.deb
+wget -O output/kali-archive-keyring_2020.2_all.deb http://http.kali.org/pool/main/k/kali-archive-keyring/kali-archive-keyring_2020.2_all.deb
+dpkg -i output/kali-archive-keyring_2020.2_all.deb
 git clone https://gitlab.com/kalilinux/packages/debootstrap.git $DEBOOTSTRAP_DIR
 sed -i '/setup_devices ()/a return 0' $DEBOOTSTRAP_DIR/functions
 sed -i '/setup_proc ()/a return 0' $DEBOOTSTRAP_DIR/functions
 make -C $DEBOOTSTRAP_DIR devices.tar.gz
-$DEBOOTSTRAP_DIR/debootstrap --foreign --arch=$DEBOOTSTRAP_ARCH --variant=minbase --include=kali-archive-keyring,perl kali-rolling $ROOTFS_DIR http://http.kali.org/kali
+$DEBOOTSTRAP_DIR/debootstrap --foreign --arch=$DEBOOTSTRAP_ARCH --variant=minbase --include=kali-archive-keyring,perl,wget kali-rolling $ROOTFS_DIR http://http.kali.org/kali
 case "$1" in
     arm32v7) cp input/qemu-arm-static $ROOTFS_DIR/usr/bin/
         ;;
