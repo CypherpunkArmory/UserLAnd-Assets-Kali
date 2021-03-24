@@ -18,7 +18,7 @@ echo "#deb-src http://http.kali.org/kali kali-rolling contrib non-free" >> /etc/
 apt-get update
 
 #install some packages with need for UserLAnd
-apt-get install -y --no-install-recommends sudo dropbear libgl1-mesa-glx tightvncserver xterm xfonts-base twm expect
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends sudo dropbear libgl1-mesa-glx tightvncserver xterm xfonts-base twm expect
 
 #clean up after ourselves
 apt-get clean
@@ -28,7 +28,7 @@ tar -czvf /output/rootfs.tar.gz --exclude sys --exclude dev --exclude proc --exc
 
 #build disableselinux to go with this release
 apt-get update
-apt-get -y install build-essential
+DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential
 gcc -shared -fpic /input/disableselinux.c -o /output/libdisableselinux.so
 
 #grab a static version of busybox that we can use to set things up later
