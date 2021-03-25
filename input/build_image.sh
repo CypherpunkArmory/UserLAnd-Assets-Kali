@@ -43,4 +43,5 @@ case "$1" in
     x86_64) cp input/qemu-x86_64-static $ROOTFS_DIR/usr/bin/
         ;;
 esac
+wget https://archive.kali.org/archive-key.asc -O $ROOTFS_DIR/etc/apt/trusted.gpg.d/kali-archive-key.asc
 tar --exclude='dev/*' -cvf $ARCH_DIR/rootfs.tar -C $ROOTFS_DIR .
