@@ -1,7 +1,0 @@
-version: '3.2'
-
-services:
-   basebuild:
-     build: 
-       args:
-         RUN_CMD: /input/build_image.sh arm64

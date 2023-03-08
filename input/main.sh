@@ -1,8 +1,5 @@
 #!/bin/bash
 
-/debootstrap/debootstrap --second-stage
-cat /debootstrap/debootstrap.log
-
 echo "127.0.0.1 localhost" > /etc/hosts
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 echo "nameserver 8.8.4.4" >> /etc/resolv.conf
@@ -14,12 +11,12 @@ echo "export LIBGL_ALWAYS_SOFTWARE=1" >> /etc/profile.d/userland.sh
 chmod +x /etc/profile.d/userland.sh
 
 #update our repos so we can install some packages
-echo "deb http://http.kali.org/kali kali-rolling main contrib non-free" > /etc/apt/sources.list
-echo "#deb-src http://http.kali.org/kali kali-rolling contrib non-free" >> /etc/apt/sources.list
 apt-get update
 
 #install some packages with need for UserLAnd
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends sudo dropbear libgl1-mesa-glx tightvncserver xterm xfonts-base twm expect
+export DEBIAN_FRONTEND=noninteractive
+apt-get install -y --no-install-recommends sudo dropbear libgl1-mesa-glx tightvncserver xterm xfonts-base twm expect wget curl
+apt-get install -y pulseaudio
 
 #clean up after ourselves
 apt-get clean
@@ -29,7 +26,7 @@ tar -czvf /output/rootfs.tar.gz --exclude sys --exclude dev --exclude proc --exc
 
 #build disableselinux to go with this release
 apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get -y install build-essential
+apt-get -y install build-essential
 gcc -shared -fpic /input/disableselinux.c -o /output/libdisableselinux.so
 
 #grab a static version of busybox that we can use to set things up later

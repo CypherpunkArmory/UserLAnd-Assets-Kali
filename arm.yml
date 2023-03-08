@@ -4,5 +4,6 @@ services:
    imagebuild:
      build: 
        args:
-         IMAGE_ARCH: arm32v7
+         IMAGE_ARCH: armhf
          QEMU_FILE: qemu-arm-static
+         RUN_CMD: /input/main.sh arm

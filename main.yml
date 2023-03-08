@@ -6,7 +6,7 @@ services:
        context: .
        dockerfile: Dockerfile
        args:
-         IMAGE_DISTRO: my_kali
+         IMAGE_DISTRO: kalilinux/kali-rolling
          IMAGE_VERSION: latest
      volumes:
        - ./output:/output

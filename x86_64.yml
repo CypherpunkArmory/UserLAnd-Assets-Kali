@@ -6,3 +6,4 @@ services:
        args:
          IMAGE_ARCH: amd64
          QEMU_FILE: qemu-x86_64-static
+         RUN_CMD: /input/main.sh x86_64

@@ -6,3 +6,4 @@ services:
        args:
          IMAGE_ARCH: i386
          QEMU_FILE: qemu-i386-static
+         RUN_CMD: /input/main.sh x86

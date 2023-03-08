@@ -4,5 +4,6 @@ services:
    imagebuild:
      build: 
        args:
-         IMAGE_ARCH: arm64v8
+         IMAGE_ARCH: arm64
          QEMU_FILE: qemu-aarch64-static
+         RUN_CMD: /input/main.sh arm64
