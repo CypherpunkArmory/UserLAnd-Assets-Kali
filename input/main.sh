@@ -21,6 +21,8 @@ apt-get install -y pulseaudio
 #clean up after ourselves
 apt-get clean
 
+sed -i 's/force_color_prompt=/#force_color_prompt=/g' /etc/skel/.bashrc
+
 #tar up what we have before we grow it
 tar -czvf /output/rootfs.tar.gz --exclude sys --exclude dev --exclude proc --exclude mnt --exclude etc/mtab --exclude output --exclude input --exclude .dockerenv /
 
